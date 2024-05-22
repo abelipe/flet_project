@@ -23,6 +23,5 @@ def main(page: Page):
     fila_boton_click2 = Row([click2])
     fila_boton_click2.alignment = 'center'
     
-
     page.add(fila_boton_click, Row(alignment=ft.MainAxisAlignment.CENTER, width=70, height=80) , fila_boton_click2)
 ft.app(target=main)

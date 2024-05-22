@@ -7,6 +7,7 @@ def Gausito(page: Page):
     page.bgcolor = "#46FBA9"
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
     page.horizontal_alignment = ft.MainAxisAlignment.CENTER
+    
     rand = ElevatedButton(text='Random', scale=2)
     rand_boton_click = Row([rand])
     rand_boton_click.alignment = 'center'
@@ -15,18 +16,21 @@ def Gausito(page: Page):
     boton_click = Row([rand, calcular])
     boton_click.alignment = 'center'
     boton_click.spacing = 335
+    
     tamano = TextField(label='Ingrese un numero')
     textf = Row([tamano])
     textf.alignment = 'center'
     
+    solucion = TextField(label='Solución de X:', disabled=True, multiline=True,min_lines=2, max_lines=10, color='#000000')
     def btn_clickrandom(event):
         n = int(tamano.value)
         A = np.random.randint(1, 10, size=(n, n))
         B = np.random.uniform(1, 99, size=(n, 1)).round(2)
         gauss = ElpanitaGauss(A, B)
-        
+        solucion.value = str(gauss.getSolucion())
+        page.update()
     rand.on_click = btn_clickrandom
-    page.add(textf, Row(alignment=ft.MainAxisAlignment.CENTER, width=70, height=80) , boton_click)
+    page.add(textf, Row(alignment=ft.MainAxisAlignment.CENTER, width=70, height=80) , boton_click, solucion)
     
 class ElpanitaGauss:
     def __init__(self, A, B):
