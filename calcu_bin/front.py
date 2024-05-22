@@ -12,7 +12,7 @@ def main(page: Page):
         Gausito(page)
         
     
-    page.bgcolor = "#46FBA9"
+    page.bgcolor = "#009999"
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
     page.horizontal_alignment = ft.MainAxisAlignment.CENTER
     click = ElevatedButton(text='Conversiones', scale=2, on_click=si)
