@@ -1,7 +1,7 @@
 import numpy as np
 import flet as ft
 from flet import Page, TextField, Dropdown, ElevatedButton, Row, Text
-
+import random
 
 def traductor(page: Page):
     page.title = 'Transformador DL'
@@ -12,16 +12,16 @@ def traductor(page: Page):
         'Ternario'), ft.dropdown.Option('Cuartenario'), ft.dropdown.Option('Octal'), ft.dropdown.Option('Decimal'), ft.dropdown.Option('Hexadecimal')],)
     down_2 = Dropdown(width=135, options=[ft.dropdown.Option('Binario'), ft.dropdown.Option(
         'Ternario'), ft.dropdown.Option('Cuartenario'), ft.dropdown.Option('Octal'), ft.dropdown.Option('Decimal'), ft.dropdown.Option('Hexadecimal')],)
+    click2 = ElevatedButton(text='random')
     click = ElevatedButton(text='Transformar')
-    fila_boton_click = Row([click])
+    fila_boton_click = Row([click, click2])
     fila_boton_click.alignment = 'center'
-    click2 = ElevatedButton(text='Transformar')
-    fila_boton_click2 = Row([click])
+    
     
     fila_textf = Row([numero, resultado])
     fila_textf.alignment = 'center'
     fila_dropdown = Row([down_1, down_2])
-    fila_dropdown.spacing = 335
+    fila_dropdown.spacing = 50
     fila_dropdown.alignment = 'center'
     
     def btn_click(event):
@@ -149,11 +149,32 @@ def traductor(page: Page):
             page.update()
         except:
             resultado.value = 'Ingrese un numero valido'
-
-
+    def btn_click2(event):
+        try:
+            valor = down_1.value
+            numero.value = randomnum(valor)
+            page.update()
+        except:
+            resultado.value = "Elegir opciones en los dropdown"
+        
     click.on_click = btn_click
-    page.add( fila_textf, fila_dropdown,  fila_boton_click, fila_boton_click2)
+    click2.on_click = btn_click2
+    page.add( fila_textf, fila_dropdown,  fila_boton_click)
 
+def randomnum(value):
+        if value == "Binario":
+            c = "".join(str(random.randint(0, 1)) for i in range(random.randint(2, 3)))
+        elif value == "Decimal":
+            c = str(random.uniform(0,100))
+        elif value == "Ternario":
+            c = "".join(str(random.randint(0, 2)) for i in range(random.randint(2, 3)))
+        elif value == "Cuartenario":
+            c = "".join(str(random.randint(0, 3)) for i in range(random.randint(1, 2)))
+        elif value == "Octal":
+            c = "".join(str(random.randint(0, 7)) for i in range(random.randint(1, 2)))
+        elif value == "Hexadecimal":
+            c = "".join(random.choice("0123456789ABCDEF") for i in range(random.randint(1, 2)))
+        return c
 class decim():
     def __init__(self, numero, sistema):
         self.numero = int(numero)

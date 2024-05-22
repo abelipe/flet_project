@@ -20,8 +20,8 @@ def Gausito(page: Page):
     tamano = TextField(label='Ingrese un numero')
     textf = Row([tamano])
     textf.alignment = 'center'
-    matriz = TextField(label='AB matriz chamin:', disabled=True, multiline=True,min_lines=2, max_lines=100, color='#000000')
-    solucion = TextField(label='Solución de X:', disabled=True, multiline=True,min_lines=2, max_lines=10, color='#000000')
+    matriz = TextField(label='AB matriz chamin:', disabled=True, multiline=True,min_lines=2, max_lines=100, color='#000000', border_color='black')
+    solucion = TextField(label='Solución de X:', disabled=True, multiline=True,min_lines=2, max_lines=10, color='#000000', border_color='black')
     
     def btn_clickrandom(event):
         try:
@@ -41,8 +41,8 @@ def Gausito(page: Page):
             
     def btn_clickcalcular(event):
         n = int(tamano.value)
-        
-        
+        A = np.random.randint(1, 10, size=(n, n))
+        B = np.random.uniform(1, 99, size=(n, 1)).round(2)
     rand.on_click = btn_clickrandom
     calcular.on_click = btn_clickcalcular
     page.add(textf, Row(alignment=ft.MainAxisAlignment.CENTER, width=70, height=80) , boton_click, Row(alignment=ft.MainAxisAlignment.CENTER, width=70, height=80), matriz, solucion)
