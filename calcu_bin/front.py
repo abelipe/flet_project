@@ -1,6 +1,7 @@
 import flet as ft
 from calculadora import decim, traductor, hexas, octales, ternario, cuart, binario
 from flet import Page, TextField, Dropdown, ElevatedButton, Row, Text
+from gauss import Gausito, ElpanitaGauss
 
 def main(page: Page):
     def si(event):
@@ -8,6 +9,8 @@ def main(page: Page):
         traductor(page)
     def si2(event):
         page.clean()
+        Gausito(page)
+        
     
     page.bgcolor = "#46FBA9"
     page.vertical_alignment = ft.MainAxisAlignment.CENTER

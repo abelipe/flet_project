@@ -7,61 +7,111 @@ def Gausito(page: Page):
     page.bgcolor = "#46FBA9"
     page.vertical_alignment = ft.MainAxisAlignment.CENTER
     page.horizontal_alignment = ft.MainAxisAlignment.CENTER
-    click = ElevatedButton(text='Conversiones', scale=2, on_click=btn_click)
-    fila_boton_click = Row([click])
-    fila_boton_click.alignment = 'center'
+    rand = ElevatedButton(text='Random', scale=2)
+    rand_boton_click = Row([rand])
+    rand_boton_click.alignment = 'center'
     
-    def btn_click():
-        n = minipana.value
-        ElpanitaGauss(n)
-
-    page.add(fila_boton_click, Row(alignment=ft.MainAxisAlignment.CENTER, width=70, height=80) , fila_boton_click2)
+    calcular = ElevatedButton(text='Calcular', scale=2)
+    boton_click = Row([rand, calcular])
+    boton_click.alignment = 'center'
+    boton_click.spacing = 335
+    tamano = TextField(label='Ingrese un numero')
+    textf = Row([tamano])
+    textf.alignment = 'center'
+    
+    def btn_clickrandom(event):
+        n = int(tamano.value)
+        A = np.random.randint(1, 10, size=(n, n))
+        B = np.random.uniform(1, 99, size=(n, 1)).round(2)
+        gauss = ElpanitaGauss(A, B)
+        
+    rand.on_click = btn_clickrandom
+    page.add(textf, Row(alignment=ft.MainAxisAlignment.CENTER, width=70, height=80) , boton_click)
     
 class ElpanitaGauss:
-    def __init__(self, n):
-        self.n = n
-        self.matriz = np.zeros((n, n+1))
-        self.solucion = np.zeros(n)
+    def __init__(self, A, B):
+        # evitar error en operaciones
+        self.A = np.array(A, dtype=float)
 
-    def ingresar_coeficientes(self):
-        matriz_datos = []
-        for control in contenedores_matriz:
-            if isinstance(control, ft.Row):
-                fila = []
-                for txt in control.controls:
-                    if isinstance(txt, ft.TextField):
-                        fila.append(float(txt.value))
-                matriz_datos.append(fila)
-        return matriz_datos
+        # matriz aumentada
+        self.AB = np.concatenate((self.A, B), axis=1)
+        self.AB0 = np.copy(self.AB)
 
-    def gauss_jordan(self):
-        for i in range(self.n):
-            if self.matriz[i][i] == 0.0:
-                print("Error, no tiene solución")
+        # eliminacion hacia adelante
+        self.AB = self.eliminacion_hacia_adelante(self.AB)
+
+        # eimina hacia atras
+        self.AB = self.eliminacion_hacia_atras(self.AB)
+
+        # solución de X
+        self.X = self.solucion(self.AB)
+
+
+
+    def pivoteo_parcial_por_filas(self, AB):
+        tamaño = np.shape(self.AB)
+        n = tamaño[0]
+        m = tamaño[1]
+
+        # para cada fila en AB
+        for i in range(0, n-1):  # columna desde diagonal i en adelante
+            columna = abs(self.AB[i:, i])
+            dondemax = np.argmax(columna)
+
+        return AB
+
+
+    def eliminacion_hacia_adelante(self, AB):
+        tamaño = np.shape(self.AB)
+        n = tamaño[0]
+        m = tamaño[1]
+
+        for i in range(0, n-1):
+            pivote = self.AB[i, i]
+            
+            if self.AB[i][i] == 0.0: #chequear que si tenga solucion la eliminacion
                 return
+            
+            adelante = i + 1
+            for k in range(adelante, n, 1):
+                factor = self.AB[k, i]/pivote
+                self.AB[k, :] = self.AB[k, :] - self.AB[i, :]*factor
 
-            for j in range(self.n):
-                if i != j:
-                    ratio = self.matriz[j][i] / self.matriz[i][i]
+        return AB
 
-                    for k in range(self.n+1):
-                        self.matriz[j][k] = self.matriz[j][k] - ratio * self.matriz[i][k]
 
-        for i in range(self.n):
-            self.solucion[i] = self.matriz[i][self.n] / self.matriz[i][i]
+    def eliminacion_hacia_atras(self, AB):
+        tamaño = np.shape(self.AB)
+        n = tamaño[0]
+        m = tamaño[1]
 
+        ultfila = n-1
+        ultcolumna = m-1
+        for i in range(ultfila, 0-1, -1):
+            pivote = self.AB[i, i]
+            atras = i-1
+            for k in range(atras, 0-1, -1):
+                factor = self.AB[k, i]/pivote
+                self.AB[k, :] = AB[k, :] - AB[i, :]*factor
+
+        # diagonal a unos
+        for i in range(n):
+            self.AB[i, :] = self.AB[i, :]/AB[i, i]
+
+        return self.AB
+
+
+    def solucion(self, AB):
+        tamaño = np.shape(self.AB)
+        n = tamaño[0]
+        m = tamaño[1]
+
+        self.X = np.copy(self.AB[:, m-1])
+        self.X = np.transpose([self.X])
+        return self.X
+    
     def getSolucion(self):
-        return self.solucion
-
-# Crear una instancia del sistema de ecuaciones
-n = int(input('Ingrese la cantidad de datos: '))
-sistema = SistemaEcuaciones(n)
-
-# Ingresar coeficientes
-sistema.ingresar_coeficientes()
-
-# Resolver el sistema
-sistema.gauss_jordan()
-
-# Imprimir la solución
-sistema.imprimir_solucion()
+        return self.X
+    
+    def getAB(self):
+        return self.AB
