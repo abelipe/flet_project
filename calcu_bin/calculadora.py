@@ -165,7 +165,7 @@ def randomnum(value):
         if value == "Binario":
             c = "".join(str(random.randint(0, 1)) for i in range(random.randint(2, 3)))
         elif value == "Decimal":
-            c = str(random.uniform(0,100))
+            c = str(random.randint(0,100))
         elif value == "Ternario":
             c = "".join(str(random.randint(0, 2)) for i in range(random.randint(2, 3)))
         elif value == "Cuartenario":
@@ -173,7 +173,7 @@ def randomnum(value):
         elif value == "Octal":
             c = "".join(str(random.randint(0, 7)) for i in range(random.randint(1, 2)))
         elif value == "Hexadecimal":
-            c = "".join(random.choice("0123456789ABCDEF") for i in range(random.randint(1, 2)))
+            c = str("".join(random.choice("0123456789ABCDEF") for i in range(random.randint(1, 2))))
         return c
 class decim():
     def __init__(self, numero, sistema):
