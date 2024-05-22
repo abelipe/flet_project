@@ -22,15 +22,24 @@ def Gausito(page: Page):
     textf.alignment = 'center'
     
     solucion = TextField(label='Solución de X:', disabled=True, multiline=True,min_lines=2, max_lines=10, color='#000000')
+    
     def btn_clickrandom(event):
+        try:
+            n = int(tamano.value)
+            A = np.random.randint(1, 10, size=(n, n))
+            B = np.random.uniform(1, 99, size=(n, 1)).round(2)
+            gauss = ElpanitaGauss(A, B)
+            solucion.value = str(gauss.getSolucion())
+            page.update()
+        except:
+            solucion.value ='Porfavor colocar un valor correcto'
+            
+    def btn_clickcalcular(event):
         n = int(tamano.value)
-        A = np.random.randint(1, 10, size=(n, n))
-        B = np.random.uniform(1, 99, size=(n, 1)).round(2)
-        gauss = ElpanitaGauss(A, B)
-        solucion.value = str(gauss.getSolucion())
-        page.update()
+        
     rand.on_click = btn_clickrandom
-    page.add(textf, Row(alignment=ft.MainAxisAlignment.CENTER, width=70, height=80) , boton_click, solucion)
+    
+    page.add(textf, Row(alignment=ft.MainAxisAlignment.CENTER, width=70, height=80) , boton_click, Row(alignment=ft.MainAxisAlignment.CENTER, width=70, height=80), solucion)
     
 class ElpanitaGauss:
     def __init__(self, A, B):
