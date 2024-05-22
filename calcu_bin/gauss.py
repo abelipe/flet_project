@@ -37,8 +37,9 @@ def Gausito(page: Page):
     def btn_clickcalcular(event):
         n = int(tamano.value)
         
+        
     rand.on_click = btn_clickrandom
-    
+    calcular.on_click = btn_clickcalcular
     page.add(textf, Row(alignment=ft.MainAxisAlignment.CENTER, width=70, height=80) , boton_click, Row(alignment=ft.MainAxisAlignment.CENTER, width=70, height=80), solucion)
     
 class ElpanitaGauss:
