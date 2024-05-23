@@ -48,7 +48,7 @@ def traductor(page: Page):
                     solucion = str(tern.getTer())
                 elif down_2.value == "Hexadecimal":
                     hexa = hexas(decimal.getDecimal())
-                    solucion = str(hexa.getHexa())
+                    solucion = hexa.getHexa()
             
             if down_1.value == "Binario":
                 decimal = decim(n, 2)
@@ -67,7 +67,7 @@ def traductor(page: Page):
                     solucion = str(tern.getTer())
                 elif down_2.value == "Hexadecimal":
                     hexa = hexas(decimal.getDecimal())
-                    solucion = str(hexa.getHexa())
+                    solucion = hexa.getHexa()
             
             if down_1.value == "Cuartenario":
                 decimal = decim(n, 4)
@@ -86,7 +86,7 @@ def traductor(page: Page):
                     solucion = str(tern.getTer())
                 elif down_2.value == "Hexadecimal":
                     hexa = hexas(decimal.getDecimal())
-                    solucion = str(hexa.getHexa())
+                    solucion = hexa.getHexa()
             
             if down_1.value == "Octal":
                 decimal = decim(n, 8)
@@ -105,7 +105,7 @@ def traductor(page: Page):
                     solucion = str(tern.getTer())
                 elif down_2.value == "Hexadecimal":
                     hexa = hexas(decimal.getDecimal())
-                    solucion = str(hexa.getHexa())
+                    solucion = hexa.getHexa()
             
             if down_1.value == "Ternario":
                 decimal = decim(n, 3)
@@ -124,7 +124,7 @@ def traductor(page: Page):
                     solucion = str(tern.getTer())
                 elif down_2.value == "Hexadecimal":
                     hexa = hexas(decimal.getDecimal())
-                    solucion = str(hexa.getHexa())
+                    solucion = hexa.getHexa()
                     
             if down_1.value == "Hexadecimal":
                 decimal = decim(n, 16)
@@ -143,7 +143,7 @@ def traductor(page: Page):
                     solucion = str(tern.getTer())
                 elif down_2.value == "Hexadecimal":
                     hexa = hexas(decimal.getDecimal())
-                    solucion = str(hexa.getHexa())
+                    solucion = hexa.getHexa()
                 
             resultado.value = solucion
             page.update()
@@ -173,7 +173,7 @@ def randomnum(value):
         elif value == "Octal":
             c = "".join(str(random.randint(0, 7)) for i in range(random.randint(1, 2)))
         elif value == "Hexadecimal":
-            c = str("".join(random.choice("0123456789ABCDEF") for i in range(random.randint(1, 2))))
+            c = "".join(random.choice("0123456789ABCDEF") for i in range(random.randint(1, 2)))
         return c
 class decim():
     def __init__(self, numero, sistema):
